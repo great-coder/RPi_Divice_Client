@@ -1,17 +1,19 @@
 import sys
+from services import net
+from controllers.account_controller import login
 
 
 def main():
-    print("Inside main")
-
-
-if __name__ == "__main__":
-    print("Calling main")
     try:
-        main()
+        net.connectivity(10, 5)
+        login()
     except:
         error = sys.exc_info()[0]
         print("Exception occurred!")
         print(error)
-    finally:
-        print("finally clause")
+        print("Shutting down system ...")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
