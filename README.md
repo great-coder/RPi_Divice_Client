@@ -1,1 +1,1 @@
-# RPi_Divice_Client
+# Divice client on Raspberry pi
