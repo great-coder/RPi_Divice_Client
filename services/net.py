@@ -1,3 +1,5 @@
+__author__ = 'Mohammad Dehghan'
+
 import urllib3
 import time
 
@@ -29,8 +31,7 @@ def connectivity(times, time_span):
 
 
 def send_request(base_url, relative_url, method, content):
-    print("request info:\
-        base url: " + base_url + "\
+    print("request info:\nbase url: " + base_url + "\
         relative url: " + relative_url + "\
         method: " + method + "\
         content: " + content)

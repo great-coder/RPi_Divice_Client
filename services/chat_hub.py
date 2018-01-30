@@ -1,3 +1,5 @@
+__author__ = 'Mohammad Dehghan'
+
 from requests import Session
 from signalr import Connection
 
