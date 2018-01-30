@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from data import secrets
 from helpers import date_converter
 
@@ -6,8 +6,12 @@ from helpers import date_converter
 def token_validation():
     if secrets.file_checker():
         data = secrets.read_token()
-        date = date_converter.string_to_date(data[1])
-        # TODO: Check token date validation
-        return True
+        token_date = date_converter.string_to_date(data[1])
+        # date format is yyyy/mm/dd
+        current_date = datetime.date.today()
+        diff = current_date - token_date
+        if diff.days < 2:
+            return True
+        return False
     else:
         return False
