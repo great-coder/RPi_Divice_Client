@@ -46,6 +46,7 @@ def read_server():
 
 
 def write_identity(data):
+    file = None
     try:
         # TODO: Read previous data from file (if exists), then update data
         file = open(file_name, "w")
@@ -65,6 +66,7 @@ def write_token(data):
 
 
 def write_server(data):
+    file = None
     try:
         # TODO: Read previous data from file (if exists), then update data
         file = open(file_name, "w")
