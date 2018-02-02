@@ -6,6 +6,7 @@ from data import secrets
 
 
 def manage():
+    net.connectivity(20, 5)
     # Check if there is any token from before and check it's expiration, then do login
     if not validation.token_validation():
         login()
@@ -15,15 +16,10 @@ def manage():
 
 
 def login():
-    # TODO: Make a request to HomeServer.API to login
-    print("login")
-    # TODO: Read server(url,port),identity(username,password) and token from secrets.json through secrets.py
+    print("Trying to login...")
     server = secrets.read_server()
     identity = secrets.read_identity()
-    content = "grant_type=password&username=" + identity[0] + "&password=" + identity[1]
-    # TODO: Send content as a Dictionary<string,string> type
-    ############################################################################
-    response = net.send_request(server[0], '/oauth', server[1], 'POST', content)
-    ############################################################################
+    content = {"grant_type": "password", "username": identity['username'], "password": identity['password']}
+    response = net.send_request(server['url'], server['port'], 'oauth', 'POST', content, True)
     print(response)
-    # secrets.write_token(data)
+# secrets.write_token(data)
