@@ -1,15 +1,15 @@
 __author__ = 'Mohammad Dehghan'
 
 import urllib3
-import http.client, urllib.parse
+import http.client
+import urllib.parse
 import time
-from data.secrets import read_token
 
 
 def is_connected():
     try:
         conn = urllib3.connection_from_url('http://irinn.ir/', timeout=1)
-        r = conn.request('GET', '/')
+        conn.request('GET', '/')
         return True
     except:
         return False
@@ -31,32 +31,22 @@ def connectivity(times, time_span):
         raise ConnectionError
 
 
-def send_request(base_url, relative_url, port, method, content):
-    print("request info:\nbase_url: " + base_url + "\
-        relative_url: " + relative_url + "\
-        port: " + port + "\
-        method: " + method + "\
-        content: " + content)
-    conn = None
-    try:
-        # TODO: Receive content as a Dictionary<string,string> type
-        ########################################################################################
-        params = urllib.parse.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
-        ########################################################################################
-        token = read_token()
-        tk_str = "Bearer " + token[0]
+def send_request(base_url, port, relative_url, method, content, token, check=False):
+    conn = http.client.HTTPConnection(base_url, port)
+    params = urllib.parse.urlencode(content)
+    if check:
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+    else:
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain",
-                   "Authentication": tk_str}
-        conn = http.client.HTTPSConnection(base_url, port)
-        conn.send(content)
-        conn.request(method, relative_url, params, headers)
-        response = conn.getresponse()
-        if response.status != 200:
-            r = BaseException
-            er = response.status + ": " + response.reason
-            r.args.__add__(er)
-            raise r
-        return response
-    finally:
-        print('Closing connection...')
-        conn.close()
+                   "Authentication": "Bearer " + token}
+    conn.request(method, relative_url, params, headers)
+    # # conn.send(content)
+    # conn.send(params)
+    response = conn.getresponse()
+    if response.status != 200:
+        r = BaseException
+        er = response.status + ": " + response.reason
+        r.args.__add__(er)
+        raise r
+    conn.close()
+    return response

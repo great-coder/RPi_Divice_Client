@@ -20,6 +20,6 @@ def login():
     server = secrets.read_server()
     identity = secrets.read_identity()
     content = {"grant_type": "password", "username": identity['username'], "password": identity['password']}
-    response = net.send_request(server['url'], server['port'], 'oauth', 'POST', content, True)
+    response = net.send_request(server['url'], server['port'], 'oauth', 'POST', content, None, True)
     print(response)
 # secrets.write_token(data)
