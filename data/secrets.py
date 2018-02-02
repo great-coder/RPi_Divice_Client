@@ -16,33 +16,21 @@ def file_checker():
 
 
 def read_identity():
-    output = []
     with open(file_name, "r") as file:
         data = json.load(file)
-        for i in data['identity']:
-            output[0] = i['username']
-            output[1] = i['password']
-    return output
+    return data['identity']
 
 
 def read_token():
-    output = []
     with open(file_name, "r") as file:
         data = json.load(file)
-        for i in data['token']:
-            output[0] = i['access_token']
-            output[1] = i['token_time']
-    return output
+    return data['token']
 
 
 def read_server():
-    output = []
     with open(file_name, "r") as file:
         data = json.load(file)
-        for i in data['server']:
-            output[0] = i['url']
-            output[1] = i['port']
-    return output
+    return data['server']
 
 
 def write_identity(data):
